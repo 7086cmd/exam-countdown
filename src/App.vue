@@ -10,7 +10,7 @@
           .filter((_, idx) => idx <= 3)"
         :key="exam.subject"
       >
-        {{ orderlist[idx] }}距离{{ exam.subject }}考试还剩
+        {{ orderlist[idx] }}{{ exam.subject }}：
         {{ dayjs(exam.start).diff(currentDate, 'day') }} 天
         {{ dayjs(exam.start).diff(currentDate, 'hour') % 24 }} 小时
         {{ dayjs(exam.start).diff(currentDate, 'minute') % 60 }} 分钟
@@ -51,7 +51,7 @@ export default {
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
       // 返回格式化的字符串
-      return `${days} 日 ${hours} 小时 ${minutes} 分钟`
+      return `${days} 日 ${hours} 小时`
     })
     // 每隔一秒更新当前日期
     setInterval(() => {
