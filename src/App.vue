@@ -91,6 +91,7 @@ body {
   background-attachment: fixed;
   font-family: 'Focalors';
   font-weight: normal;
+  user-select: none;
 }
 
 h1 {
@@ -114,7 +115,7 @@ h1 {
   border-radius: 0.5rem;
   padding: 4rem;
   text-align: center;
-  filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 h1 {
