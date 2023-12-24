@@ -107,6 +107,7 @@ h1 {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  filter: blur(6px);
 }
 
 .card {
