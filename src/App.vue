@@ -106,8 +106,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  filter: blur(6px);
+  height: 100vh;=
 }
 
 .card {
@@ -115,6 +114,7 @@ h1 {
   border-radius: 0.5rem;
   padding: 4rem;
   text-align: center;
+  filter: blur(6px);
 }
 
 h1 {
