@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="card">
+    <div class="card" @mouseover="hover" @mouseleave="blur">
       <h2>距离 2023 学年高一期末考试还剩</h2>
       <h1>{{ countdown }}</h1>
       <p
@@ -10,11 +10,14 @@
           .filter((_, idx) => idx <= 3)"
         :key="exam.subject"
       >
-        {{ orderlist[idx] }}{{ exam.subject }}：
-        {{ dayjs(exam.start).diff(currentDate, 'day') }} 天
+        {{ orderlist[idx] }}{{ exam.subject }}： {{ dayjs(exam.start).diff(currentDate, 'day') }} 天
         {{ dayjs(exam.start).diff(currentDate, 'hour') % 24 }} 小时
         {{ dayjs(exam.start).diff(currentDate, 'minute') % 60 }} 分钟
-        <span>（{{ dayjs(exam.start).format('YYYY-MM-DD HH:mm:ss') }}——{{ dayjs(exam.end).format('HH:mm:ss') }}）</span>
+        <span
+          >（{{ dayjs(exam.start).format('YYYY-MM-DD HH:mm') }}，{{
+            dayjs(exam.end).diff(exam.start, 'minute')
+          }} 分钟）</span
+        >
       </p>
       <p
         v-if="
@@ -39,6 +42,8 @@ export default {
     // 当前日期
     const currentDate = ref(dayjs())
     // 倒计时
+    const bluring = ref('6px')
+    const radius = ref('6px')
     const countdown = computed(() => {
       // 计算时间差
       const diff = targetDate.diff(currentDate.value)
@@ -61,7 +66,7 @@ export default {
       { subject: '语文', start: '2024-01-09 08:30:00', end: '2024-01-09 11:00:00', display: true },
       { subject: '生物', start: '2024-01-09 13:30:00', end: '2024-01-09 15:00:00', display: false },
       { subject: '地理', start: '2024-01-09 16:00:00', end: '2024-01-09 17:00:00', display: false },
-      { subject: '数学', start: '2024-01-10 08:00:00', end: '2024-01-11 10:00:00', display: true },
+      { subject: '数学', start: '2024-01-10 08:00:00', end: '2024-01-10 10:00:00', display: true },
       { subject: '技术', start: '2024-01-10 10:30:00', end: '2024-01-10 12:00:00', display: true },
       { subject: '物理', start: '2024-01-10 13:30:00', end: '2024-01-10 15:00:00', display: true },
       { subject: '政治', start: '2024-01-10 16:00:00', end: '2024-01-10 17:00:00', display: false },
@@ -69,12 +74,25 @@ export default {
       { subject: '历史', start: '2024-01-11 11:00:00', end: '2024-01-11 12:00:00', display: false },
       { subject: '英语', start: '2024-01-11 14:00:00', end: '2024-01-11 16:00:00', display: true }
     ]
+
+    function hover() {
+      bluring.value = '6px'
+      radius.value = '1rem'
+    }
+    function blur() {
+      bluring.value = '1px'
+      radius.value = '2.5rem'
+    }
     // 返回响应式数据
     return {
       countdown,
       exams,
       dayjs,
-      orderlist: ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩']
+      orderlist: ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'],
+      bluring,
+      radius,
+      hover,
+      blur
     }
   }
 }
@@ -112,10 +130,11 @@ h1 {
 
 .card {
   background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 0.5rem;
+  border-radius: 6px;
   padding: 4rem;
   text-align: center;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(3px);
+  translate: 2s;
 }
 
 h1 {
